@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的内嵌H5页面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 欢迎使用 H5 页面</h1>
+        <p>这是一个通过 GitHub Pages 部署的内嵌 H5 页面。</p>
+        <p>可以随时更新内容，无需重新发布 App！</p>
+        <button class="button" onclick="showMessage()">点击测试</button>
+        <p id="timeDisplay" style="margin-top: 15px; font-size: 14px; color: #999;"></p>
+    </div>
+
+    <script>
+        // 显示当前时间
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('timeDisplay').textContent = 
+                `当前时间: ${now.toLocaleString()}`;
+        }
+        
+        // 按钮点击事件
+        function showMessage() {
+            alert('H5 页面交互成功！这个页面托管在 GitHub Pages 上。');
+        }
+        
+        // 初始化
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // 与原生 App 通信（如果被嵌入）
+        if (window.ReactNativeWebView) {
+            window.addEventListener('load', function() {
+                window.ReactNativeWebView.postMessage(JSON.stringify({
+                    type: 'page_loaded',
+                    data: { message: 'H5页面加载完成' }
+                }));
+            });
+        }
+    </script>
+</body>
+</html>
